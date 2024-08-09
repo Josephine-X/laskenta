@@ -1,0 +1,35 @@
+extends layout 
+
+block content
+
+    svg(width="40" height="40" viewBox="0 0 40 40" stroke="rgb(40,40,40)" stroke-linecap="round" stroke-width="4" id="sivusvg" onclick="sivu()")
+        line(x1="5" x2="35" y1="10" y2="10")
+        line(x1="5" x2="35" y1="20" y2="20")
+        line(x1="5" x2="35" y1="30" y2="30")
+    h1(id="tyomaanimi") #{osiot.nimi}
+    svg(width="40" height="40" class="lisaasvg" viewBox="0 0 40 40" onclick="lisaaOsio()")
+        circle(cx="20" cy="20" r="18" fill="rgb(180,180,180)" stroke="rgb(185,185,185)")
+        line(x1="20" x2="20" y1="5" y2="35" stroke="rgb(220,220,220)" stroke-width="4")
+        line(x1="5" x2="35" y1="20" y2="20" stroke="rgb(220,220,220)" stroke-width="4")
+    div(id="sivu" class="sivuoff")
+        svg(width="40" height="40" class="tyosvg" viewBox="0 0 40 40" onclick="lisaauusi()")
+            circle(cx="20" cy="20" r="18" fill="rgb(180,180,180)" stroke="rgb(185,185,185)")
+            line(x1="20" x2="20" y1="5" y2="35" stroke="rgb(220,220,220)" stroke-width="4")
+            line(x1="5" x2="35" y1="20" y2="20" stroke="rgb(220,220,220)" stroke-width="4")
+        each i in lista
+            a(href=`/tyomaat/${i._id}`) #{i.nimi}
+    div(id="lisaaosio" class="off")
+        svg(width="40" height="40" viewBox="0 0 40 40" stroke="rgb(180,180,180)" stroke-width="4" stroke-linecap="round" onclick="sulje(event.target)" class="sulje")
+            line(x1="5" x2="35" y1="20" y2="20" transform="rotate(-45 20 20)")
+            line(x1="5" x2="35" y1="20" y2="20" transform="rotate(45 20 20)")
+        h3 lisää osio
+        input(type="text" name="nimi" id="nimiosio")
+        div(onclick=`luoOsio("${osiot._id}")` id="luoosio" ) Luo
+    div(id="osiot")
+        each i in osiot.osiot
+            div(class="osio")
+                svg(width="40" height="40" viewBox="0 0 40 40" stroke-linecap="round" stroke-width="4" stroke="rgb(180,180,180)" class="poistavaihe" onclick=`poistaosio(event,"${osiot._id}","${i._id}")` )
+                    line(x1="5" x2="35" y1="20" y2="20" transform="rotate(-45 20 20)")
+                    line(x1="5" x2="35" y1="20" y2="20" transform="rotate(45 20 20)")
+                a(href=`/${osiot._id}/${i._id}` class="osio") 
+                    div #{i.nimi}
